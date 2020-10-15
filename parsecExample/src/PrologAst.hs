@@ -72,18 +72,17 @@ instance Show Tail where
   show (VARTAIL v t) = "VAR " ++ show v ++ " " ++ show t
 
 instance Show AtomBr where
-  show (ATOMINBR a) = "(" ++ show a ++ ")"
-  show (ATOMBR abr) = "(" ++ show abr ++ ")"
-  show (VARBR v) = "(VAR " ++ show v ++ ")"
+  show (ATOMINBR a) = show a
+  show (ATOMBR abr) = show abr
+  show (VARBR v) = "VAR " ++ show v
 
 instance Show TypeDef where
-  --show _ = ""
   show (TypeDef s t) = "TYPE " ++ show s ++ " " ++ show t
 
 instance Show Type where
   show (Var s) = "VAR " ++ show s
   show (TAtom a) = show a
-  show (TBr br) = "(" ++ show br ++ ")"
+  show (TBr br) = show br --"(" ++ show br ++ ")"
   show (Arrow l r) = "ARROW (" ++ show l ++ ") (" ++ show r ++ ")"
 
 

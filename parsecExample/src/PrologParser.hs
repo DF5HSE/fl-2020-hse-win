@@ -151,13 +151,13 @@ parseRelation =
   )
 
 parseRelationBody :: Parser RelationBody
-parseRelationBody = fmap (foldl1 Disj) (do 
+parseRelationBody = fmap (foldr1 Disj) (do 
   h <- parseConj
   t <- many (reservedOp ";" >> parseConj)
   return (h:t)
   )
 
-parseConj = fmap (foldl1 Conj) (do
+parseConj = fmap (foldr1 Conj) (do
   h <- parseOperand
   t <- many (reservedOp "," >> parseOperand)
   return (h:t)
@@ -216,7 +216,7 @@ parseType =
     return $ TBr t
   )
 
-parseArrow = fmap (foldl1 Arrow) (do
+parseArrow = fmap (foldr1 Arrow) (do
     h <- parseType
     t <- many (reservedOp "->" >> parseType)
     return (h:t)

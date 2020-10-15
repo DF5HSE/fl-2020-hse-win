@@ -11,6 +11,12 @@ type ex (A -> B) -> C.
 type ex A -> B -> C.
 type ex list (list A) -> list A -> o.
 type ex pair A B -> (A -> C) -> (B -> D) -> pair C D.
+type ex (A -> B) -> C.
+type ex ((A -> B) -> C).
+type ex ((A -> B)) -> C.
+type ex A -> B -> C.
+
+
 
 type a b.
 type a b -> X.
@@ -21,10 +27,9 @@ type d a -> (((b))).
 
 
 
+
 type filter (A -> o) -> list A -> list A -> o.
 type fruit string -> o.
-
-
 
 
 abc.
@@ -65,6 +70,16 @@ a (b (c))  :- (a b) .
 
 
 
+
+f :- a, b, c.
+f :- (a, b), c.
+f :- a; b; c.
+f :- (a; b); c.
+a a b C.
+a (a (b C)).
+a a b c d.
+a (a (b c) d).
+a b c d e f g.
 
       
 a (a).
