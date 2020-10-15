@@ -9,9 +9,9 @@ data Expr = Num Int
           | Pow Expr Expr
           deriving (Show, Eq)
 
-parseString :: String -> Either ParseError Expr
-parseString =
-  parse (do r <- exprParser; eof; return r) ""
+--parseString :: String -> Either ParseError Expr
+--parseString =
+--  parse (do r <- exprParser; eof; return r) ""
 
 -- cell =
 --   letter `seq` \x ->

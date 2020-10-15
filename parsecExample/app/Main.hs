@@ -1,7 +1,8 @@
 module Main where
 
-import Parser
+import PrologParser
 import System.IO
+import System.Environment
 
 
 runParser :: String -> IO ()
@@ -14,23 +15,27 @@ parseFromFile :: FilePath -> IO ()
 parseFromFile path = do
   input <- readFile path
   case parseString input of
-    Left err -> print err
+    Left err -> do 
+      print err
+      writeFile (path ++ ".out") (show err)
     Right r -> do
       writeFile (path ++ ".out") (show r)
 
-
 main :: IO ()
 main = do
-  putStrLn ""
-
-  runParser "13"
-  runParser "42"
-  runParser "007"
-  runParser "a"
-  runParser "(a+13)*42"
-  runParser "a+13*42"
-  runParser "1^2^3^4"
-  runParser "a+2^3*4"
-
-  writeFile "input.txt" "a+2^3*4"
-  parseFromFile "input.txt"
+  (a:args) <- getArgs
+  --args <- tail argss
+  if not $ null args then
+    case head args of
+      ('-':'-':mode) -> 
+         case mode of
+            "atom" -> parseFromFileByMode (args !! 1) parseAtom
+            "relation" -> parseFromFileByMode (args !! 1) parseRelationFull
+            "module" -> parseFromFileByMode (args !! 1) parseModule
+            "prog" -> parseFromFile (args !! 1)
+            "typeexpr" -> parseFromFileByMode (args !! 1) parseArrow
+            "type" -> parseFromFileByMode (args !! 1) parseTypeDef
+            otherwise -> print $ "There isn't '" ++ mode ++ "' mode"
+      otherwise -> parseFromFile $ head args
+  else
+    print "No arguments"
